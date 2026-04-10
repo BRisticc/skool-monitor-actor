@@ -1,0 +1,114 @@
+{
+  "name": "skool-community-monitor-actor",
+  "version": "2.0.0",
+  "description": "Monitors Skool community feeds for pain-signal posts. All keywords editable from Input tab.",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "apify": "^3.7.0",
+    "crawlee": "^3.16.0",
+    "puppeteer": "*"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "apify": {
+    "title": "Skool Community Monitor",
+    "description": "Scrapes public and private Skool community feeds for pain posts. All keywords and filters editable from Input tab. No AI required.",
+    "version": "2.0.0",
+    "inputSchema": {
+      "title": "Skool Community Monitor",
+      "type": "object",
+      "schemaVersion": 1,
+      "properties": {
+        "communitySlugs": {
+          "title": "🏠 Community Slugs",
+          "type": "array",
+          "description": "Slugovi sa app.skool.com/c/{SLUG}/feed. Dodaj sve community-e koje hoćeš da monitorišeš.",
+          "editor": "stringList",
+          "default": [
+            "skool-community",
+            "the-skool-games",
+            "community-owners",
+            "course-creators-hub"
+          ]
+        },
+        "sessionCookie": {
+          "title": "🔑 Skool Session Cookie",
+          "type": "string",
+          "description": "Samo za privatne community-e. Chrome DevTools → Application → Cookies → skool.com → kopiraj 'sb' cookie value.",
+          "editor": "textfield",
+          "default": "",
+          "isSecret": true
+        },
+        "painKeywords": {
+          "title": "🚨 Pain Keywords",
+          "type": "array",
+          "description": "Postovi koji sadrže ove reči se označavaju kao pain. Dodaj reči koje tvoj ICP koristi.",
+          "editor": "stringList",
+          "default": [
+            "help", "how do i", "can't figure", "is there a way",
+            "struggling", "not working", "broken", "nobody posts",
+            "members not engaging", "email", "zapier", "crm",
+            "automation", "manually", "churn", "leaving", "cancel",
+            "limitation", "missing", "wish skool had", "workaround",
+            "hours a week", "ghost town", "no way to", "not scalable"
+          ]
+        },
+        "categoryKeywords": {
+          "title": "🗂️ Category Keywords (JSON)",
+          "type": "object",
+          "description": "Mapa kategorija → ključnih reči. Edituj da dodaš svoje kategorije.",
+          "editor": "json",
+          "default": {
+            "Onboarding & Engagement":   ["onboard", "welcome", "engage", "new member", "nobody posts", "ghost town", "first post", "activate"],
+            "Churn & Retention":         ["churn", "leaving", "cancel", "quit", "retention", "drop off", "losing members"],
+            "Email & CRM Integration":   ["email", "crm", "activecampaign", "ghl", "mailchimp", "collect email", "zapier"],
+            "Platform Limitations":      ["limitation", "missing", "wish skool", "no way to", "manually", "no automation"],
+            "Funnel Architecture":        ["funnel", "landing page", "upsell", "free to paid", "conversion"],
+            "Automation & Integrations": ["automate", "automation", "webhook", "make.com", "zapier", "api"],
+            "Analytics & Reporting":     ["analytics", "dashboard", "report", "metrics", "stats"]
+          }
+        },
+        "maxPostsPerCommunity": {
+          "title": "📄 Max Posts Per Community",
+          "type": "integer",
+          "default": 40,
+          "minimum": 5,
+          "maximum": 150
+        },
+        "minEngagement": {
+          "title": "❤️ Min Engagement (reactions + comments)",
+          "type": "integer",
+          "default": 3,
+          "minimum": 0,
+          "maximum": 500
+        },
+        "minPainScore": {
+          "title": "📊 Min Pain Score (0–100)",
+          "type": "integer",
+          "default": 15,
+          "minimum": 0,
+          "maximum": 100
+        },
+        "scrapeComments": {
+          "title": "💬 Scrapuj Komentare",
+          "type": "boolean",
+          "default": true
+        },
+        "proxyConfig": {
+          "title": "🔒 Proxy",
+          "type": "object",
+          "editor": "proxy",
+          "default": {
+            "useApifyProxy": true,
+            "apifyProxyGroups": ["RESIDENTIAL"]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "name": "skool-community-monitor-actor",
-  "version": "2.0.0",
-  "description": "Monitors Skool community feeds for pain-signal posts. All keywords editable from Input tab.",
+  "name": "skool-web-research-actor",
+  "version": "3.0.0",
+  "description": "Scrapes Trustpilot, G2, Capterra reviews + Bing/DuckDuckGo search results and articles mentioning Skool.",
   "main": "src/main.js",
   "type": "module",
   "scripts": {
@@ -16,9 +16,9 @@
     "node": ">=20.0.0"
   },
   "apify": {
-    "title": "Skool Community Monitor",
-    "description": "Scrapes public and private Skool community feeds for pain posts. All keywords and filters editable from Input tab. No AI required.",
-    "version": "2.0.0",
+    "title": "Skool — Web Research v3",
+    "description": "Scrapes Trustpilot reviews, G2 reviews, Capterra, and 20+ Bing/DDG search queries to find articles and discussions about Skool across the web.",
+    "version": "3.0.0",
     "inputSchema": {
       "title": "Skool Community Monitor",
       "type": "object",
